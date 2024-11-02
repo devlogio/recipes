@@ -41,7 +41,9 @@ class _MyHomePageState extends State<MyHomePage> {
         openRecipe: changeView,
       );
     } else {
-      return RecipeView();
+      return RecipeView(
+        back: changeView,
+      );
     }
   }
 
