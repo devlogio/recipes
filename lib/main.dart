@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipes/ui/home_view.dart';
+import 'package:recipes/ui/recipe_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,14 +27,32 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String _view = 'home';
+
+  void changeView(String newView) {
+    setState(() {
+      _view = newView;
+    });
+  }
+
+  Widget _getView() {
+    if (_view == 'home') {
+      return HomeView(
+        openRecipe: changeView,
+      );
+    } else {
+      return RecipeView();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child: const SafeArea(
+      child: SafeArea(
         child: Scaffold(
           backgroundColor: Colors.white,
-          body: HomeView(),
+          body: _getView(),
         ),
       ),
     );

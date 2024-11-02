@@ -5,7 +5,8 @@ import 'package:recipes/widgets/recipe_list_item.dart';
 import '../data/recipes.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+  final Function openRecipe;
+  const HomeView({super.key, required this.openRecipe});
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -13,55 +14,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final CarouselSliderController _controller = CarouselSliderController();
-
   int _current = 0;
-
-  final List<Widget> imageSliders = recipes
-      .map((item) => GestureDetector(
-            onTap: () {
-              print(item.title);
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
-              child: ClipRRect(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(15.0),
-                  ),
-                  child: Stack(
-                    children: <Widget>[
-                      Image(
-                        image: AssetImage(item.image),
-                        fit: BoxFit.cover,
-                        width: 500.0,
-                      ),
-                      Positioned(
-                        bottom: 0.0,
-                        left: 0.0,
-                        right: 0.0,
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [Color.fromARGB(200, 0, 0, 0), Color.fromARGB(0, 0, 0, 0)],
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                            ),
-                          ),
-                          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                          child: Text(
-                            item.title,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )),
-            ),
-          ))
-      .toList();
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +33,7 @@ class _HomeViewState extends State<HomeView> {
         Column(
           children: [
             CarouselSlider(
-              items: imageSliders,
+              items: createFeaturedRecipes(widget.openRecipe),
               carouselController: _controller,
               options: CarouselOptions(
                   autoPlay: true,
@@ -119,19 +72,69 @@ class _HomeViewState extends State<HomeView> {
             ),
           ),
         ),
-        getPopularRecipes(),
+        getPopularRecipes(widget.openRecipe),
       ],
     );
   }
 }
 
-Widget getPopularRecipes() {
+List<Widget> createFeaturedRecipes(Function openRecipe) {
+  final List<Widget> featuredRecipes = recipes
+      .map((recipe) => GestureDetector(
+            onTap: () {
+              openRecipe(recipe.title);
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: ClipRRect(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(15.0),
+                  ),
+                  child: Stack(
+                    children: <Widget>[
+                      Image(
+                        image: AssetImage(recipe.image),
+                        fit: BoxFit.cover,
+                        width: 500.0,
+                      ),
+                      Positioned(
+                        bottom: 0.0,
+                        left: 0.0,
+                        right: 0.0,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [Color.fromARGB(200, 0, 0, 0), Color.fromARGB(0, 0, 0, 0)],
+                              begin: Alignment.bottomCenter,
+                              end: Alignment.topCenter,
+                            ),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                          child: Text(
+                            recipe.title,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
+            ),
+          ))
+      .toList();
+  return featuredRecipes;
+}
+
+Widget getPopularRecipes(Function openRecipe) {
   List<Widget> popularRecipes = [];
   for (var recipe in recipes) {
     popularRecipes.add(
       GestureDetector(
         onTap: () {
-          print(recipe.title);
+          openRecipe(recipe.title);
         },
         child: RecipeListItem(
           recipe: recipe,
