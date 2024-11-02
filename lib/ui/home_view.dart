@@ -119,22 +119,27 @@ class _HomeViewState extends State<HomeView> {
             ),
           ),
         ),
-        RecipeListItem(
-          recipe: recipes[0],
-        ),
-        RecipeListItem(
-          recipe: recipes[1],
-        ),
-        RecipeListItem(
-          recipe: recipes[2],
-        ),
-        RecipeListItem(
-          recipe: recipes[3],
-        ),
-        RecipeListItem(
-          recipe: recipes[4],
-        ),
+        getPopularRecipes(),
       ],
     );
   }
+}
+
+Widget getPopularRecipes() {
+  List<Widget> popularRecipes = [];
+  for (var recipe in recipes) {
+    popularRecipes.add(
+      GestureDetector(
+        onTap: () {
+          print(recipe.title);
+        },
+        child: RecipeListItem(
+          recipe: recipe,
+        ),
+      ),
+    );
+  }
+  return Column(
+    children: popularRecipes,
+  );
 }
