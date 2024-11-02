@@ -82,7 +82,7 @@ List<Widget> createFeaturedRecipes(Function openRecipe) {
   final List<Widget> featuredRecipes = recipes
       .map((recipe) => GestureDetector(
             onTap: () {
-              openRecipe(recipe.title);
+              openRecipe(recipe.title, recipe);
             },
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -134,7 +134,7 @@ Widget getPopularRecipes(Function openRecipe) {
     popularRecipes.add(
       GestureDetector(
         onTap: () {
-          openRecipe(recipe.title);
+          openRecipe(recipe.title, recipe);
         },
         child: RecipeListItem(
           recipe: recipe,

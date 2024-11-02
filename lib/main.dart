@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipes/model/recipe.dart';
 import 'package:recipes/ui/home_view.dart';
 import 'package:recipes/ui/recipe_view.dart';
 
@@ -28,8 +29,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String _view = 'home';
+  late Recipe? _recipe;
 
-  void changeView(String newView) {
+  void changeView(String newView, Recipe? recipe) {
+    _recipe = recipe;
     setState(() {
       _view = newView;
     });
@@ -43,6 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       return RecipeView(
         back: changeView,
+        recipe: _recipe,
       );
     }
   }

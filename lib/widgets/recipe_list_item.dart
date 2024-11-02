@@ -43,7 +43,7 @@ class RecipeListItem extends StatelessWidget {
                       ),
                       Expanded(
                         child: Text(
-                          recipe.subTitle,
+                          recipe.description,
                           style: const TextStyle(
                             color: Colors.black54,
                           ),
@@ -80,7 +80,7 @@ class RecipeListItem extends StatelessWidget {
                             ],
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),

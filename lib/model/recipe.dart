@@ -1,10 +1,21 @@
 class Recipe {
   String image;
   String title;
-  String subTitle;
+  String description;
   String difficulty;
   String time;
   String serving;
+  List<String> ingredients;
+  List<String> directions;
 
-  Recipe(this.image, this.title, this.subTitle, this.difficulty, this.time, this.serving);
+  Recipe(
+    this.image,
+    this.title,
+    this.description,
+    this.difficulty,
+    this.time,
+    this.serving,
+    this.ingredients,
+    this.directions,
+  );
 }
